@@ -1,0 +1,56 @@
+print("Bom dia, boa tarde ou boa noite") 
+print("\nAntes de iniciarmos, devo dizer que este programa é um exercício de treinamento para saber mais sobre PYTHON!")
+print("\nEntão, siga os comandos!")
+
+while True:
+    
+    print("\n- TELA INICIAL -")
+    print("1. Iniciar")
+    print("2. Fechar programa")
+    
+    opt = input("Selecione uma opção: ")
+    
+    if opt == '1':
+        num1 = float(input(f"\nDigite o primeiro número: "))
+        num2 = float(input(f"Digite o segundo número: "))
+        print(f"Os números digitados foram: {num1} e {num2}")
+
+        print("\n- TABELA DE OPERAÇÕES BÁSICAS -")
+        print("1. Adição")
+        print("2. Subtração")
+        print("3. Multiplicação")
+        print("4. Divisão")
+
+        op = input(f"Digite a operação que você deseja: ")
+
+        if op == '1':
+            calc = num1 + num2
+            print(f"O resultado é: {calc}")
+
+        elif op == '2':
+            calc = num1 - num2
+            print(f"O resultado é: {calc}")
+
+        elif op == '3':
+            calc = num1 * num2
+            print(f"O resultado é: {calc}")
+            
+        elif op == '4':
+            if num2 != 0:
+                calc = num1 / num2
+                print(f"O resultado é: {calc}")
+            else:
+                print("Erro: divisão por zero!")
+
+        else:
+            print(f"Por favor, digite uma opção válida!")
+
+        # comando para voltar a tela inicial
+        input("\nPressione ENTER para voltar à tela inicial...")
+
+    elif opt == '2':
+        print("Programa finalizado.")
+        break
+
+    else:
+        print("Opção inválida. Tente novamente.")
