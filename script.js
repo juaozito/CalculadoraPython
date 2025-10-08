@@ -1,51 +1,105 @@
-// A função principal que é chamada pelos botões no HTML
-function calcular(operacao) {
-    // 1. Pega os valores dos campos de entrada (substitui o input() do Python)
-    const num1 = parseFloat(document.getElementById('num1').value);
-    const num2 = parseFloat(document.getElementById('num2').value);
-    
-    // Pega os elementos onde o resultado e o aviso serão exibidos
-    const resultadoElement = document.getElementById('resultado');
-    const avisoElement = document.getElementById('aviso');
-    
-    let resultado = 0;
-    let mensagemAviso = '';
+let numeroAtual = '0';
+let primeiroNumero = null;
+let operador = null;
+let esperandoNovoNumero = false;
 
-    // Verifica se a entrada é válida (caso o usuário não digite nada)
-    if (isNaN(num1) || isNaN(num2)) {
-        resultadoElement.textContent = "ERRO";
-        avisoElement.textContent = "Por favor, insira números válidos.";
-        return;
-    }
+const display = document.getElementById('display-resultado');
+const aviso = document.getElementById('aviso');
 
-    // 2. A lógica da calculadora (substitui seus blocos if/elif)
-    switch (operacao) {
-        case '+':
-            resultado = num1 + num2;
-            break;
-        case '-':
-            resultado = num1 - num2;
-            break;
-        case '*':
-            resultado = num1 * num2;
-            break;
-        case '/':
-            // Trata a divisão por zero, assim como no seu código Python
-            if (num2 === 0) {
-                resultadoElement.textContent = "ERRO";
-                mensagemAviso = "Erro: divisão por zero!";
-                avisoElement.textContent = mensagemAviso;
-                return;
-            }
-            resultado = num1 / num2;
-            break;
-        default:
-            // Caso uma operação inválida seja tentada
-            mensagemAviso = "Operação inválida!";
-            resultadoElement.textContent = "ERRO";
-    }
+// --- Funções de Lógica ---
 
-    // 3. Exibe o resultado e limpa a mensagem de aviso (se houver)
-    resultadoElement.textContent = resultado.toLocaleString('pt-BR');
-    avisoElement.textContent = mensagemAviso;
+function atualizarDisplay() {
+    display.textContent = numeroAtual;
+    aviso.textContent = '';
 }
+
+function adicionarNumero(digito) {
+    aviso.textContent = '';
+    
+    if (esperandoNovoNumero === true) {
+        numeroAtual = digito;
+        esperandoNovoNumero = false;
+    } else {
+        // Impede múltiplos pontos decimais e substitui o '0' inicial
+        if (digito === '.') {
+            if (numeroAtual.includes('.')) return;
+        }
+        
+        if (numeroAtual === '0' && digito !== '.') {
+            numeroAtual = digito;
+        } else {
+            numeroAtual += digito;
+        }
+    }
+    atualizarDisplay();
+}
+
+function selecionarOperacao(proximoOperador) {
+    const valorDeEntrada = parseFloat(numeroAtual);
+
+    if (primeiroNumero === null) {
+        primeiroNumero = valorDeEntrada;
+    } else if (operador) {
+        // Executa o cálculo da operação anterior (se houver)
+        const resultado = executarCalculoInterno(primeiroNumero, valorDeEntrada, operador);
+        primeiroNumero = resultado;
+        numeroAtual = String(resultado);
+    }
+    
+    esperandoNovoNumero = true;
+    operador = proximoOperador;
+    atualizarDisplay(); // Atualiza o display com o resultado intermediário ou o primeiro número
+}
+
+function executarCalculo() {
+    const valorDeEntrada = parseFloat(numeroAtual);
+    
+    if (operador === null) {
+        return; // Nada para calcular
+    }
+
+    const resultado = executarCalculoInterno(primeiroNumero, valorDeEntrada, operador);
+
+    // Reseta o estado para começar um novo cálculo
+    numeroAtual = String(resultado);
+    primeiroNumero = null;
+    operador = null;
+    esperandoNovoNumero = false;
+    atualizarDisplay();
+}
+
+// Lógica principal de cálculo (seu if/elif de Python traduzido)
+function executarCalculoInterno(num1, num2, op) {
+    switch (op) {
+        case '+':
+            return num1 + num2;
+        case '-':
+            return num1 - num2;
+        case '*':
+            return num1 * num2;
+        case '/':
+            if (num2 === 0) {
+                aviso.textContent = "Erro: Divisão por zero!";
+                return 0; 
+            }
+            return num1 / num2;
+        default:
+            return num2;
+    }
+}
+
+function limparTudo(tipo) {
+    if (tipo === 'all') {
+        numeroAtual = '0';
+        primeiroNumero = null;
+        operador = null;
+        esperandoNovoNumero = false;
+        aviso.textContent = 'Memória Limpa';
+    } else if (tipo === 'del') {
+        numeroAtual = numeroAtual.slice(0, -1) || '0';
+    }
+    atualizarDisplay();
+}
+
+// Inicializa o display
+atualizarDisplay();
