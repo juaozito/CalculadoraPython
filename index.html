@@ -3,18 +3,20 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Imagem Clicável</title>
-    <link rel="stylesheet" href="style.css">
+    <title>Calculadora Customizada</title>
+    <link rel="stylesheet" href="style.css"> 
 </head>
 <body>
+
     <div class="calculadora-container">
         
         <div id="display-resultado" class="display">0</div>
 
         <div class="botoes-overlay">
             
-            <button class="btn-clear" onclick="limparTudo('all')">C</button>
+            <button class="btn-clear" onclick="limparTudo('all')">C</button> 
             <button class="btn-delete" onclick="limparTudo('del')">DEL</button>
+            <button class="btn-op" onclick="selecionarOperacao('%')">%</button>
             <button class="btn-op" onclick="selecionarOperacao('/')">÷</button>
 
             <button class="btn-num" onclick="adicionarNumero('7')">7</button>
