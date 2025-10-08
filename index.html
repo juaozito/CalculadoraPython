@@ -3,40 +3,45 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora Simples Python (Web)</title>
+    <title>Calculadora Imagem Clicável</title>
     <link rel="stylesheet" href="style.css">
 </head>
 <body>
-    <div class="container">
-        <h1>Calculadora Básica</h1>
-        <p>Exercício de treinamento (Base Python)</p>
+    <div class="calculadora-container">
+        
+        <div id="display-resultado" class="display">0</div>
 
-        <div class="inputs-group">
-            <label for="num1">Primeiro Número:</label>
-            <input type="number" id="num1" placeholder="Digite o primeiro número" value="0">
-        </div>
+        <div class="botoes-overlay">
+            
+            <button class="btn-clear" onclick="limparTudo('all')">C</button>
+            <button class="btn-delete" onclick="limparTudo('del')">DEL</button>
+            <button class="btn-op" onclick="selecionarOperacao('/')">÷</button>
 
-        <div class="inputs-group">
-            <label for="num2">Segundo Número:</label>
-            <input type="number" id="num2" placeholder="Digite o segundo número" value="0">
-        </div>
+            <button class="btn-num" onclick="adicionarNumero('7')">7</button>
+            <button class="btn-num" onclick="adicionarNumero('8')">8</button>
+            <button class="btn-num" onclick="adicionarNumero('9')">9</button>
+            <button class="btn-op" onclick="selecionarOperacao('*')">x</button>
 
-        <div class="operacoes-group">
-            <h2>Operações:</h2>
-            <button onclick="calcular('+')">1. Adição (+)</button>
-            <button onclick="calcular('-')">2. Subtração (-)</button>
-            <button onclick="calcular('*')">3. Multiplicação (x)</button>
-            <button onclick="calcular('/')">4. Divisão (÷)</button>
-        </div>
+            <button class="btn-num" onclick="adicionarNumero('4')">4</button>
+            <button class="btn-num" onclick="adicionarNumero('5')">5</button>
+            <button class="btn-num" onclick="adicionarNumero('6')">6</button>
+            <button class="btn-op" onclick="selecionarOperacao('-')">-</button>
 
-        <div class="resultado-box">
-            <h3>Resultado:</h3>
-            <p id="resultado">0</p>
+            <button class="btn-num" onclick="adicionarNumero('1')">1</button>
+            <button class="btn-num" onclick="adicionarNumero('2')">2</button>
+            <button class="btn-num" onclick="adicionarNumero('3')">3</button>
+            <button class="btn-op" onclick="selecionarOperacao('+')">+</button>
+
+            <button class="btn-num" onclick="adicionarNumero('0')">0</button>
+            <button class="btn-num" onclick="adicionarNumero('.')">.</button>
+            <button class="btn-equals" onclick="executarCalculo()">=</button>
+
         </div>
         
-        <p class="aviso" id="aviso"></p>
-
     </div>
+    
+    <p id="aviso" class="aviso"></p>
+
     <script src="script.js"></script>
 </body>
 </html>
