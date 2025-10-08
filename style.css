@@ -1,23 +1,118 @@
-/* ... Seu CSS de body, .calculadora-container, .display, etc., está ótimo! ... */
+/*
+ * O SEU CÓDIGO CSS COMPLETO (style.css)
+ */
 
-/* Torna os botões transparentes e ajusta o layout */
+body {
+    /* Centraliza a calculadora na tela */
+    font-family: 'Arial', sans-serif;
+    background-color: #e9ecef;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; /* Centralização vertical */
+    align-items: center; /* Centralização horizontal */
+    min-height: 100vh; /* Ocupa a altura total da viewport */
+    margin: 0;
+    padding: 20px; /* Garante que haja espaço nas bordas em telas menores */
+}
+
+/* --- Container Principal (onde a imagem fica) --- */
+.calculadora-container {
+    /* Define o tamanho exato da sua imagem de calculadora (320x480) */
+    width: 320px;
+    height: 480px;
+
+    /* A imagem da calculadora como fundo */
+    background-image: url('calculadora.png'); /* **VERIFIQUE:** O arquivo deve estar no local correto! */
+    background-size: cover; /* Garante que a imagem preencha o container */
+    background-repeat: no-repeat;
+    background-position: center;
+
+    position: relative; /* Ponto de referência para posicionar o display e os botões */
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    border-radius: 10px;
+}
+
+/* --- Área do Display de Resultado --- */
+.display {
+    position: absolute;
+    /* Ajuste de Posicionamento para a sua imagem: */
+    top: 30px;
+    left: 20px;
+    width: 280px;
+    height: 70px;
+
+    /* Estilização */
+    background: rgba(255, 255, 255, 0); /* Fundo totalmente transparente */
+    text-align: right;
+    padding: 10px;
+    font-size: 2.5em; /* Tamanho da fonte padrão */
+    color: #333; /* Cor do número no display */
+    overflow: hidden; /* Garante que números longos não saiam do display */
+    white-space: nowrap; /* Evita que o texto quebre a linha */
+}
+
+/* --- Camada Transparente dos Botões --- */
+.botoes-overlay {
+    position: absolute;
+    /* Ajuste de Posicionamento para a sua imagem: */
+    top: 130px; /* Início das teclas */
+    left: 10px;
+    width: 300px; /* Largura total da área dos botões (280px + 2*10px de padding) */
+    height: 340px; /* Altura total da área dos botões */
+
+    /* Configuração de GRID para posicionar os 5x4 botões */
+    display: grid;
+    grid-template-columns: repeat(4, 1fr); /* 4 colunas de largura igual */
+    grid-template-rows: repeat(5, 1fr); /* 5 linhas de altura igual */
+    gap: 10px; /* Espaçamento entre os botões */
+}
+
+/* --- Estilo Base dos Botões (Transparente) --- */
 .botoes-overlay button {
-    background: rgba(0, 0, 0, 0); /* Totalmente transparente */
+    /* Torna o botão totalmente transparente para ver a imagem de fundo */
+    background: rgba(0, 0, 0, 0); 
     border: none;
     cursor: pointer;
-    font-size: 0; /* Esconde o texto do botão (o número/símbolo) */
-    /* Adicione isto para garantir que a área de clique seja a área inteira da célula */
+    
+    /* Esconde o texto/símbolo que você colocou no HTML (ex: "7", "+", "=") */
+    font-size: 0; 
+    line-height: 0; 
+
+    /* Garante que o botão ocupe toda a célula da grade */
     width: 100%; 
     height: 100%;
-    box-sizing: border-box; /* Opcional: Para garantir que padding/border não afetem o tamanho */
 }
 
-/* O botão 0 ocupará 2 colunas - (Se você usar a classe .btn-0 no HTML) */
-.btn-0 { 
+/* --- Estilos de Efeito de Clique (Feedback visual) --- */
+.botoes-overlay button:active {
+    /* Adiciona um pequeno brilho ao ser pressionado */
+    background: rgba(255, 255, 255, 0.2); 
+    border-radius: 50%; /* Torna o brilho circular (opcional) */
+}
+/* Opcional: Efeito mais sutil e quadrado para o 'C' e 'DEL' */
+.btn-clear:active, .btn-delete:active, .btn-op:active {
+    border-radius: 5px; 
+}
+
+
+/* --- Ajustes de Layout Específicos (para o '0' e '=') --- */
+
+/* O botão '0' precisa ocupar 2 colunas. */
+/* Contando na sua estrutura HTML, o botão '0' é o 18º elemento da grade. */
+.botoes-overlay button:nth-child(18) { 
     grid-column: span 2; 
 }
 
-/* Ajustes específicos de layout para o botão de IGUAL */
+/* O botão de IGUAL (=) precisa ocupar 2 colunas (está no final) */
 .btn-equals {
     grid-column: span 2; 
+}
+
+
+/* --- Aviso de Erro/Mensagem --- */
+.aviso {
+    color: #dc3545; /* Vermelho */
+    font-weight: bold;
+    margin-top: 20px;
+    text-align: center;
 }
