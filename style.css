@@ -1,57 +1,4 @@
-body {
-    font-family: 'Arial', sans-serif;
-    background-color: #e9ecef;
-    display: flex;
-    flex-direction: column; /* Permite centralizar verticalmente os elementos */
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
-    margin: 0;
-}
-
-.calculadora-container {
-    /* Define o tamanho exato da sua imagem de calculadora */
-    width: 320px; 
-    height: 480px;
-    
-    /* A imagem da calculadora como fundo */
-    background-image: url('calculadora.png'); /* **IMPORTANTE:** O nome do seu arquivo de imagem! */
-    background-size: cover;
-    background-repeat: no-repeat;
-    
-    position: relative; /* Ponto de referência para posicionar o display e os botões */
-    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
-    border-radius: 10px;
-}
-
-/* Estiliza a área onde o resultado aparece */
-.display {
-    position: absolute;
-    /* Posicione este bloco sobre a área de exibição na sua imagem */
-    top: 30px; 
-    left: 20px;
-    width: 280px;
-    height: 70px;
-    background: rgba(255, 255, 255, 0); /* Torna o fundo transparente */
-    text-align: right;
-    padding: 10px;
-    font-size: 2.5em;
-    color: #333; /* Cor do número no display */
-}
-
-.botoes-overlay {
-    position: absolute;
-    top: 130px; /* Ajuste para começar onde as teclas começam na sua imagem */
-    left: 10px;
-    width: 300px;
-    height: 340px;
-    
-    /* Configuração de GRID para posicionar os 5x4 botões */
-    display: grid;
-    grid-template-columns: repeat(4, 1fr); 
-    grid-template-rows: repeat(5, 1fr); 
-    gap: 10px; /* Espaçamento entre os botões */
-}
+/* ... Seu CSS de body, .calculadora-container, .display, etc., está ótimo! ... */
 
 /* Torna os botões transparentes e ajusta o layout */
 .botoes-overlay button {
@@ -59,29 +6,18 @@ body {
     border: none;
     cursor: pointer;
     font-size: 0; /* Esconde o texto do botão (o número/símbolo) */
+    /* Adicione isto para garantir que a área de clique seja a área inteira da célula */
+    width: 100%; 
+    height: 100%;
+    box-sizing: border-box; /* Opcional: Para garantir que padding/border não afetem o tamanho */
 }
 
-/* Estilos de sobreposição para indicar clique */
-.botoes-overlay button:active {
-    background: rgba(255, 255, 255, 0.2); /* Aparece um pequeno brilho ao clicar */
-    border-radius: 50%;
+/* O botão 0 ocupará 2 colunas - (Se você usar a classe .btn-0 no HTML) */
+.btn-0 { 
+    grid-column: span 2; 
 }
 
 /* Ajustes específicos de layout para o botão de IGUAL */
 .btn-equals {
-    /* Faz o botão de IGUAL ocupar 2 colunas */
     grid-column: span 2; 
-}
-
-/* O botão 0 ocupará 2 colunas */
-.botoes-overlay .btn-num:nth-child(17) { /* Este é o 0 na lista de botões */
-    grid-column: span 2; 
-}
-
-
-/* Aviso de Erro/Mensagem */
-.aviso {
-    color: #dc3545;
-    font-weight: bold;
-    margin-top: 20px;
 }
