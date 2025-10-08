@@ -1,105 +1,90 @@
-let numeroAtual = '0';
-let primeiroNumero = null;
-let operador = null;
-let esperandoNovoNumero = false;
-
+let currentInput = '0';
+let previousInput = '';
+let operation = null;
 const display = document.getElementById('display-resultado');
 const aviso = document.getElementById('aviso');
 
-// --- Funções de Lógica ---
-
 function atualizarDisplay() {
-    display.textContent = numeroAtual;
-    aviso.textContent = '';
+    display.innerText = currentInput;
+    aviso.innerText = ''; // Limpa o aviso ao atualizar
+    
+    // Opcional: Limita o tamanho do texto para não estourar o display
+    if (currentInput.length > 10) {
+        display.style.fontSize = '2em';
+    } else {
+        display.style.fontSize = '2.5em';
+    }
 }
 
-function adicionarNumero(digito) {
-    aviso.textContent = '';
-    
-    if (esperandoNovoNumero === true) {
-        numeroAtual = digito;
-        esperandoNovoNumero = false;
+function adicionarNumero(num) {
+    if (currentInput === '0' && num !== '.') {
+        currentInput = num;
+    } else if (num === '.' && currentInput.includes('.')) {
+        return; // Impede múltiplos pontos
     } else {
-        // Impede múltiplos pontos decimais e substitui o '0' inicial
-        if (digito === '.') {
-            if (numeroAtual.includes('.')) return;
-        }
-        
-        if (numeroAtual === '0' && digito !== '.') {
-            numeroAtual = digito;
-        } else {
-            numeroAtual += digito;
-        }
+        currentInput += num;
     }
     atualizarDisplay();
 }
 
-function selecionarOperacao(proximoOperador) {
-    const valorDeEntrada = parseFloat(numeroAtual);
-
-    if (primeiroNumero === null) {
-        primeiroNumero = valorDeEntrada;
-    } else if (operador) {
-        // Executa o cálculo da operação anterior (se houver)
-        const resultado = executarCalculoInterno(primeiroNumero, valorDeEntrada, operador);
-        primeiroNumero = resultado;
-        numeroAtual = String(resultado);
+function selecionarOperacao(op) {
+    if (currentInput === '') return;
+    if (previousInput !== '') {
+        executarCalculo();
     }
-    
-    esperandoNovoNumero = true;
-    operador = proximoOperador;
-    atualizarDisplay(); // Atualiza o display com o resultado intermediário ou o primeiro número
+    operation = op;
+    previousInput = currentInput;
+    currentInput = '';
+    atualizarDisplay();
 }
 
 function executarCalculo() {
-    const valorDeEntrada = parseFloat(numeroAtual);
-    
-    if (operador === null) {
-        return; // Nada para calcular
-    }
+    let resultado;
+    const prev = parseFloat(previousInput);
+    const current = parseFloat(currentInput);
 
-    const resultado = executarCalculoInterno(primeiroNumero, valorDeEntrada, operador);
+    if (isNaN(prev) || isNaN(current)) return;
 
-    // Reseta o estado para começar um novo cálculo
-    numeroAtual = String(resultado);
-    primeiroNumero = null;
-    operador = null;
-    esperandoNovoNumero = false;
-    atualizarDisplay();
-}
-
-// Lógica principal de cálculo (seu if/elif de Python traduzido)
-function executarCalculoInterno(num1, num2, op) {
-    switch (op) {
+    switch (operation) {
         case '+':
-            return num1 + num2;
+            resultado = prev + current;
+            break;
         case '-':
-            return num1 - num2;
+            resultado = prev - current;
+            break;
         case '*':
-            return num1 * num2;
+            resultado = prev * current;
+            break;
         case '/':
-            if (num2 === 0) {
-                aviso.textContent = "Erro: Divisão por zero!";
-                return 0; 
+            if (current === 0) {
+                aviso.innerText = "Erro: Divisão por zero!";
+                currentInput = '0';
+                operation = null;
+                previousInput = '';
+                atualizarDisplay();
+                return;
             }
-            return num1 / num2;
+            resultado = prev / current;
+            break;
         default:
-            return num2;
+            return;
     }
+    currentInput = resultado.toString();
+    operation = null;
+    previousInput = '';
+    atualizarDisplay();
 }
 
 function limparTudo(tipo) {
     if (tipo === 'all') {
-        numeroAtual = '0';
-        primeiroNumero = null;
-        operador = null;
-        esperandoNovoNumero = false;
-        aviso.textContent = 'Memória Limpa';
+        currentInput = '0';
+        previousInput = '';
+        operation = null;
     } else if (tipo === 'del') {
-        numeroAtual = numeroAtual.slice(0, -1) || '0';
+        currentInput = currentInput.slice(0, -1);
+        if (currentInput === '') currentInput = '0';
     }
     atualizarDisplay();
 }
 
-// Inicializa o display
-atualizarDisplay();
+atualizarDisplay(); // Inicializa o display ao carregar
