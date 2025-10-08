@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora Simples Python (Web)</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+<body>
+    <div class="container">
+        <h1>Calculadora Básica</h1>
+        <p>Exercício de treinamento (Base Python)</p>
+
+        <div class="inputs-group">
+            <label for="num1">Primeiro Número:</label>
+            <input type="number" id="num1" placeholder="Digite o primeiro número" value="0">
+        </div>
+
+        <div class="inputs-group">
+            <label for="num2">Segundo Número:</label>
+            <input type="number" id="num2" placeholder="Digite o segundo número" value="0">
+        </div>
+
+        <div class="operacoes-group">
+            <h2>Operações:</h2>
+            <button onclick="calcular('+')">1. Adição (+)</button>
+            <button onclick="calcular('-')">2. Subtração (-)</button>
+            <button onclick="calcular('*')">3. Multiplicação (x)</button>
+            <button onclick="calcular('/')">4. Divisão (÷)</button>
+        </div>
+
+        <div class="resultado-box">
+            <h3>Resultado:</h3>
+            <p id="resultado">0</p>
+        </div>
+        
+        <p class="aviso" id="aviso"></p>
+
+    </div>
+    <script src="script.js"></script>
+</body>
+</html>
